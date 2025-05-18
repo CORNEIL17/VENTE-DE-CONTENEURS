@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conteneurs Pro - Vente et location</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f9fc;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column; /* Stack the top row and images below it */
+      align-items: center; /* Center the column content */
+    }
+
+    /* New container for the title and auth links */
+    .header-top {
+      display: flex; /* Make this a flex row */
+      justify-content: space-between; /* Push title left, auth links right */
+      align-items: center; /* Vertically align items */
+      width: 100%; /* Ensure it takes full width */
+      margin-bottom: 10px; /* Space between this row and the images below */
+    }
+
+    .header-top h1 {
+      margin: 0; /* Remove default margin to align properly */
+      font-size: 2.5rem;
+    }
+
+    /* Container for header images */
+    .header-images {
+      display: flex;
+      gap: 10px; /* Space between images */
+      margin-bottom: 20px; /* Space below images */
+      flex-wrap: wrap; /* Allow images to wrap on smaller screens */
+      justify-content: center; /* Center images when wrapped */
+    }
+    .header-images img {
+      height: 50px; /* Fixed height for small icons */
+      width: auto; /* Maintain aspect ratio */
+      border-radius: 5px;
+      object-fit: cover;
+    }
+
+    /* Zone connexion/inscription */
+    .auth-links {
+      display: flex;
+      gap: 20px;
+      /* margin-top: 10px; */ /* Removed, spacing handled by header-top margin-bottom */
+    }
+    .auth-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 8px 15px;
+      border: 2px solid white;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .auth-links a:hover {
+      background-color: white;
+      color: #004080;
+    }
+
+    nav {
+      background-color: #003366;
+      display: flex;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      max-height: 400px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      max-height: 400px;
+    }
+    .hero-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      background-color: rgba(0, 64, 128, 0.6);
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      border-bottom: 2px solid #004080;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      color: #004080;
+    }
+    .produits {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }
+    .produit {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      flex: 1 1 280px; /* Allows items to grow and shrink, with a base width of 280px */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex; /* Use flexbox for internal layout */
+      flex-direction: column; /* Stack image, text, button vertically */
+    }
+    .produit img {
+      max-width: 100%;
+      height: auto; /* Ensure image height adjusts */
+      border-radius: 5px;
+      margin-bottom: 10px; /* Space below image */
+    }
+    .produit h3 {
+      margin-top: 0; /* Remove default top margin */
+      margin-bottom: 5px; /* Space below heading */
+      color: #0073e6;
+    }
+    .produit p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      flex-grow: 1; /* Allow paragraph to take up available space */
+      margin-bottom: 15px; /* Space before button */
+    }
+    button {
+      background-color: #0073e6;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      /* margin-top: 10px; */ /* Removed as flex-grow on p handles spacing */
+      transition: background-color 0.3s ease;
+      align-self: flex-start; /* Align button to the start of the flex container */
+    }
+    button:hover {
+      background-color: #005bb5;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    form input, form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      resize: vertical;
+    }
+    form textarea {
+      height: 100px;
+    }
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>Conteneurs Pro</h1>
+    <div class="auth-links">
+      <a href="#connexion">Connexion</a>
+      <a href="#inscription">Inscription</a>
+    </div>
+  </div>
+
+  <div class="header-images">
+    <img src="https://placehold.co/50x50/0073e6/ffffff?text=Std" alt="Image of Standard Container Icon">
+    <img src="https://placehold.co/50x50/0073e6/ffffff?text=Reefer" alt="Image of Reefer Container Icon">
+    <img src="https://placehold.co/50x50/0073e6/ffffff?text=Bureau" alt="Image of Office Container Icon">
+    <img src="https://placehold.co/50x50/0073e6/ffffff?text=Maison" alt="Image of Home Container Icon">
+  </div>
+</header>
+
+<div class="hero">
+  <img src="https://cdn.pixabay.com/photo/2017/10/10/21/46/container-2835046_1280.jpg" alt="Conteneurs empilés en port" />
+  <div class="hero-text">
+    Vente & Location de Conteneurs <br> Fiables & Sur Mesure
+  </div>
+</div>
+
+<nav>
+  <a href="#presentation">Présentation</a>
+  <a href="#produits">Nos conteneurs</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+  <section id="presentation">
+    <h2>Qui sommes-nous ?</h2>
+    <p>
+      Conteneurs Pro est une entreprise leader dans la vente et la location de conteneurs standards et sur mesure.
+      Que ce soit pour du stockage, des chantiers, ou des espaces modulaires, nous proposons des solutions fiables, durables et adaptées à vos besoins.
+    </p>
+  </section>
+
+  <section id="produits">
+    <h2>Nos conteneurs</h2>
+    <div class="produits">
+      <div class="produit">
+        <img src="https://cdn.pixabay.com/photo/2016/11/18/18/20/container-1838013_640.jpg" alt="Conteneur standard 20 pieds" />
+        <h3>Conteneur Standard 20 pieds</h3>
+        <p>Dimensions : 6,06 m (L) x 2,44 m (l) x 2,59 m (H)<br>
+           Idéal pour le transport et le stockage général.</p>
+        <button onclick="alert('Merci pour votre intérêt pour le conteneur 20 pieds !')">En savoir plus</button>
+      </div>
+      <div class="produit">
+        <img src="https://cdn.pixabay.com/photo/2017/04/10/20/33/container-2214970_640.jpg" alt="Conteneur standard 40 pieds" />
+        <h3>Conteneur Standard 40 pieds</h3>
+        <p>Dimensions : 12,19 m (L) x 2,44 m (l) x 2,59 m (H)<br>
+           Parfait pour les besoins plus importants en stockage ou transport.</p>
+        <button onclick="alert('Merci pour votre intérêt pour le conteneur 40 pieds !')">En savoir plus</button>
+      </div>
+      <div class="produit">
+        <img src="https://cdn.pixabay.com/photo/2020/11/24/15/48/container-5761286_640.jpg" alt="Conteneur frigorifique" />
+        <h3>Conteneur Frigorifique</h3>
+        <p>Dimensions standards avec isolation et contrôle de température.<br>
+           Parfait pour le transport de produits frais ou congelés.</p>
+        <button onclick="alert('Merci pour votre intérêt pour le conteneur frigorifique !')">En savoir plus</button>
+      </div>
+
+      <div class="produit">
+        <img src="https://placehold.co/640x480/004080/ffffff?text=Conteneur+Bureau" alt="Conteneur bureautique" />
+        <h3>Conteneur Bureautique</h3>
+        <p>Basé sur des conteneurs standards (20 ou 40 pieds), aménagé pour servir de bureau.<br>
+           Inclut isolation, fenêtres, porte, éclairage, prises électriques et souvent climatisation.<br>
+           Idéal pour chantiers, événements, ou extensions temporaires.</p>
+        <button onclick="alert('Merci pour votre intérêt pour le conteneur bureautique !')">En savoir plus</button>
+      </div>
+      <div class="produit">
+        <img src="https://placehold.co/640x480/004080/ffffff?text=Conteneur+Maison" alt="Conteneur maison" />
+        <h3>Conteneur Maison</h3>
+        <p>Solution d'habitation modulaire construite à partir d'un ou plusieurs conteneurs.<br>
+           Entièrement isolé et équipé (cuisine, salle de bain, chambres, salon).<br>
+           Offre une alternative rapide et personnalisable aux constructions traditionnelles.</p>
+        <button onclick="alert('Merci pour votre intérêt pour le conteneur maison !')">En savoir plus</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contactez-nous</h2>
+    <form onsubmit="envoyerFormulaire(event)">
+      <label for="nom">Nom complet :</label>
+      <input type="text" id="nom" name="nom" required />
+
+      <label for="email">Adresse e-mail :</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Votre message :</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit">Envoyer</button>
+    </form>
+  </section>
+
+  <section id="connexion">
+    <h2>Connexion</h2>
+    <form onsubmit="connexionUtilisateur(event)">
+      <label for="emailConnexion">Email :</label>
+      <input type="email" id="emailConnexion" required />
+
+      <label for="motDePasseConnexion">Mot de passe :</label>
+      <input type="password" id="motDePasseConnexion" required />
+
+      <button type="submit">Se connecter</button>
+    </form>
+  </section>
+
+  <section id="inscription">
+    <h2>Inscription</h2>
+    <form onsubmit="inscriptionUtilisateur(event)">
+      <label for="nomInscription">Nom :</label>
+      <input type="text" id="nomInscription" required />
+
+      <label for="emailInscription">Email :</label>
+      <input type="email" id="emailInscription" required />
+
+      <label for="motDePasseInscription">Mot de passe :</label>
+      <input type="password" id="motDePasseInscription" required />
+
+      <button type="submit">Créer mon compte</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <p>📞 Téléphone : +33 1 23 45 67 89 | 📧 Email : contact@conteneurspro.fr</p>
+  <p>© 2025 Conteneurs Pro - Tous droits réservés</p>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics-compat.js"></script>
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCEv6sxJKp4BnKTYWdFOxwF6vg2wGRWKWM",
+    authDomain: "vente-de-conteneurs.firebaseapp.com",
+    projectId: "vente-de-conteneurs",
+    storageBucket: "vente-de-conteneurs.firebasestorage.app",
+    messagingSenderId: "589589702852",
+    appId: "1:589589702852:web:b8cfe0ed7b3ffe0b9bc191",
+    measurementId: "G-ZDWZF87XK7"
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const analytics = firebase.analytics();
+
+  console.log("Firebase initialized!"); // Optional: add a log to confirm initialization
+</script>
+
+<script>
+  function envoyerFormulaire(event) {
+    event.preventDefault();
+    const nom = document.getElementById('nom').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    if(nom && email && message) {
+      // Replaced alert with template literal for variable insertion
+      alert(`Merci ${nom} ! Votre message a bien été reçu. Nous vous répondrons bientôt.`);
+      // Here you could add a real submission with a backend or mail service
+      // Or integrate with Firebase Firestore or other services
+    }
+  }
+</script>
+
+<script>
+  function connexionUtilisateur(event) {
+    event.preventDefault();
+    const email = document.getElementById('emailConnexion').value;
+    const motDePasse = document.getElementById('motDePasseConnexion').value;
+
+    if (email && motDePasse) {
+      // Replaced alert with template literal for variable insertion
+      alert(`Bienvenue à nouveau ! (Email : ${email})`);
+      // You would integrate Firebase Authentication sign-in here
+      // For example: firebase.auth().signInWithEmailAndPassword(email, motDePasse)
+    }
+  }
+
+  function inscriptionUtilisateur(event) {
+    event.preventDefault();
+    const nom = document.getElementById('nomInscription').value;
+    const email = document.getElementById('emailInscription').value;
+    const motDePasse = document.getElementById('motDePasseInscription').value;
+
+    if (nom && email && motDePasse) {
+      // Replaced alert with template literal for variable insertion
+      alert(`Merci ${nom} ! Ton compte a été créé.`);
+      // You would integrate Firebase Authentication sign-up here
+      // For example: firebase.auth().createUserWithEmailAndPassword(email, motDePasse)
+    }
+  }
+</script>
+
+</body>
+</html>
